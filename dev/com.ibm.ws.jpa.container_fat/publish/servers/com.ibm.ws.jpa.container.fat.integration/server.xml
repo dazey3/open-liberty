@@ -1,0 +1,63 @@
+<server>
+  <include location="../fatTestPorts.xml" />
+
+  <featureManager>
+    <feature>componenttest-1.0</feature>
+    <feature>jaxrs-2.0</feature>
+    <feature>jndi-1.0</feature>
+    <feature>jsonp-1.0</feature>
+    <feature>servlet-3.1</feature>
+    <feature>jpaContainer-2.1</feature>
+    <feature>bells-1.0</feature>
+    <feature>cdi-1.2</feature>
+    <feature>ejblite-3.2</feature>
+    <feature>beanValidation-1.1</feature>
+    <feature>jdbc-4.2</feature>
+  </featureManager>
+
+  <application location="jpaIntegration.ear">
+    <classloader commonLibraryRef="jdbclib,ecl"/>
+  </application>
+  
+  <bell libraryRef="ecl"/>
+   
+  <library id="jdbclib">
+    <fileset dir="${shared.resource.dir}/derby" includes="*.jar"/>
+  </library>
+  
+  <library id="ecl">
+    <fileset dir="${shared.resource.dir}/ecl" includes="*.jar"/>
+  </library>
+  
+  <jdbcDriver id="Derby" libraryRef="jdbclib"/>
+  
+  <dataSource id="jdbc/JPA_DS"
+        jndiName="jdbc/JPA_DS"
+        jdbcDriverRef="Derby"
+        isolationLevel="TRANSACTION_READ_COMMITTED">
+    <properties.derby.embedded databaseName="memory:ds" createDatabase="create"/>
+  </dataSource>
+    
+  <dataSource id="jdbc/JPA_NJTADS"
+        jndiName="jdbc/JPA_NJTADS"
+        jdbcDriverRef="Derby"
+        transactional="false"
+        isolationLevel="TRANSACTION_READ_COMMITTED">
+    <properties.derby.embedded databaseName="memory:ds" createDatabase="create"/>
+  </dataSource>
+
+  <javaPermission className="java.lang.RuntimePermission" name="accessDeclaredMembers"/>
+  <javaPermission className="java.lang.RuntimePermission" name="accessClassInPackage.com.ibm.oti.shared"/>
+  <javaPermission className="java.util.PropertyPermission" name="*" actions="read"/>
+  <javaPermission className="java.lang.reflect.ReflectPermission" name="suppressAccessChecks"/>
+  <javaPermission className="javax.management.MBeanServerPermission" name="findMBeanServer"/>
+  <javaPermission className="javax.management.MBeanPermission" name="*" actions="*"/>
+  <javaPermission className="java.lang.RuntimePermission" name="getClassLoader"/>    
+  <javaPermission codebase="${shared.resource.dir}/ecl/org.eclipse.persistence.core_2.6.4.v20160829-44060b6.jar" className="java.security.AllPermission"/>
+  <javaPermission codebase="${shared.resource.dir}/ecl/org.eclipse.persistence.dbws_2.6.4.v20160829-44060b6.jar" className="java.security.AllPermission"/>
+  <javaPermission codebase="${shared.resource.dir}/ecl/org.eclipse.persistence.jpa_2.6.4.v20160829-44060b6.jar" className="java.security.AllPermission"/>
+  <javaPermission codebase="${shared.resource.dir}/ecl/org.eclipse.persistence.jpa.jpql_2.6.4.v20160829-44060b6.jar" className="java.security.AllPermission"/>
+  <javaPermission codebase="${shared.resource.dir}/ecl/org.eclipse.persistence.jpa.modelgen_2.6.4.v20160829-44060b6.jar" className="java.security.AllPermission"/>
+  <javaPermission codebase="${shared.resource.dir}/ecl/org.eclipse.persistence.moxy_2.6.4.v20160829-44060b6.jar" className="java.security.AllPermission"/>
+  <javaPermission codebase="${shared.resource.dir}/derby/derby.jar" className="java.security.AllPermission"/>
+</server>

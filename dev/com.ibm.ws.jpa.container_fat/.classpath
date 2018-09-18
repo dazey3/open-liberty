@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="fat/src"/>
+	<classpathentry kind="src" path="test-applications/jpaContainer/src"/>
+	<classpathentry kind="src" path="test-entities/src"/>
+	<classpathentry kind="src" path="test-providers/src"/>
+	<classpathentry kind="src" path="test-bundles/ZombieJPAProvider/src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fattest.simplicity"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.ibm.websphere.javaee.servlet.3.1"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.ibm.websphere.javaee.persistence.2.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/ant_build/lib/junit.jar"/>
+	<classpathentry kind="lib" path="publish/shared/resources/ecl/org.eclipse.persistence.jpa_2.6.4.v20160829-44060b6.jar"/>
+	<classpathentry kind="lib" path="publish/shared/resources/ecl/org.eclipse.persistence.moxy_2.6.4.v20160829-44060b6.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.ibm.websphere.javaee.transaction.1.2"/>
+	<classpathentry kind="src" path="/com.ibm.websphere.javaee.ejb.3.2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.ibm.websphere.javaee.cdi.1.2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.ibm.websphere.javaee.validation.1.1"/>	
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

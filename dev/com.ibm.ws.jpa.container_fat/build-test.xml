@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.ibm.ws.jpa.container_fat" default="buildandrun" basedir=".">
+    <property name="javac.boot.classpath" value="1.7" />
+    <property name="minimum.java.level.for.test.execution" value="1.8"/>
+    
+    <property name="fat.shared.resource.dir" location="${basedir}/publish/shared/resources"/>
+    <import file="../ant_build/public_imports/shrinkwrap_fat_imports.xml" />
+	
+	<target name="addAutoInstallApplications" description="Automatically Install applications on LibertyServer instance creation">
+		<mkdir dir="${basedir}/publish/files/bundles"/>
+        <move todir="${basedir}/publish/files/bundles">
+            <fileset dir="${basedir}/publish/bundles" includes="*.jar"/>
+        </move>
+	</target>
+
+    <target name="addRequiredLibraries">
+        <echo message="copy derby"/>
+        <mkdir dir="${fat.shared.resource.dir}/derby"/>
+        <copy file="${derbyDriver}" toDir="${fat.shared.resource.dir}/derby"/>
+    </target>
+</project>

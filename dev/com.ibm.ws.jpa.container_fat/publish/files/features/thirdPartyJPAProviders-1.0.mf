@@ -1,0 +1,30 @@
+Subsystem-ManifestVersion: 1
+IBM-ShortName: thirdPartyJPAProviders-1.0
+Subsystem-SymbolicName: test.jpa.container.thirdPartyJPAProviders-1.0; visibility:=public
+Subsystem-Version: 1.0
+Subsystem-Content: jpa.provider.undead.zombie; version="[1,1.0.100)",
+ jpa.provider.thirdparty.eclipselink; version="[1,1.0.100)",
+ org.eclipse.persistence.antlr,
+ org.eclipse.persistence.asm,
+ org.eclipse.persistence.core,
+ org.eclipse.persistence.dbws,
+ org.eclipse.persistence.jpa,
+ org.eclipse.persistence.jpa.jpql,
+ org.eclipse.persistence.jpa.modelgen,
+ org.eclipse.persistence.moxy
+Subsystem-Type: osgi.subsystem.feature
+IBM-Feature-Version: 2
+IBM-API-Package: jpa.provider.undead; type="third-party",
+ org.eclipse.persistence; type="third-party",
+ org.eclipse.persistence.descriptors.changetracking; type="third-party",
+ org.eclipse.persistence.internal.descriptors; type="third-party",
+ org.eclipse.persistence.internal.identitymaps; type="third-party",
+ org.eclipse.persistence.internal.jpa.deployment; type="third-party",
+ org.eclipse.persistence.internal.jpa.rs.metadata.model; type="third-party",
+ org.eclipse.persistence.internal.weaving; type="third-party",
+ org.eclipse.persistence.jaxb; type="third-party",
+ org.eclipse.persistence.jpa; type="third-party",
+ org.eclipse.persistence.jpa.dynamic; type="third-party",
+ org.eclipse.persistence.jpa.metadata; type="third-party",
+ org.eclipse.persistence.queries; type="third-party",
+ org.eclipse.persistence.sessions; type="third-party"

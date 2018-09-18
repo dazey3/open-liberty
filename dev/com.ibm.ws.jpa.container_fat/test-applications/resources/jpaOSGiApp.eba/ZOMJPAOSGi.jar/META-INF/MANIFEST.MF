@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ZOMJPAOSGi
+Bundle-SymbolicName: ZOMJPAOSGi
+Bundle-Version: 1.0.0
+Bundle-ClassPath: WEB-INF/classes
+Web-ContextPath: /zomJpaOSGi
+Meta-Persistence: 
+Import-Package: 
+ javax.annotation,
+ javax.naming,
+ javax.persistence,
+ javax.persistence.spi,
+ javax.servlet,
+ javax.servlet.annotation,
+ javax.servlet.http,
+ javax.sql,
+ javax.transaction,
+ javax.validation,
+ javax.xml.bind,
+ javax.xml.namespace,
+ javax.xml.transform.stream,
+ jpa.provider.undead,
+ org.junit,
+ org.osgi.framework

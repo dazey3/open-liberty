@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Application-ManifestVersion: 1.0
+Application-Name: JPAOSGiTestApp
+Application-Version: 1.0.0
+Application-SymbolicName: JPAOSGiTestApp
+Application-Content: 
+ ECLJPAOSGi;version="1.0.0",
+ ZOMJPAOSGi;version="1.0.0"

@@ -1,0 +1,23 @@
+-include= ~../../../ant_build/resources/bnd/bundle.props
+bVersion=1.0.0
+
+# For more information, see http://was.pok.ibm.com/xwiki/bin/view/Liberty/UsingBnd
+
+Bundle-Name: ZombieJPAProvider
+Bundle-SymbolicName: jpa.provider.undead.zombie; singleton:=true
+Bundle-Description: Bundles that provides a fake JPA provider; version=${bVersion}
+
+Export-Package: jpa.provider.undead
+
+Private-Package: jpa.provider.undead.internal.*
+
+Service-Component: \
+  jpa.provider.undead.ZombiePersistenceProvider; \
+    implementation:=jpa.provider.undead.ZombiePersistenceProvider; \
+    provide:='\
+      javax.persistence.spi.PersistenceProvider,\
+      jpa.provider.undead.ZombiePersistenceProvider'; \
+    configuration-policy:=ignore; \
+    properties:='\
+      javax.persistence.provider=jpa.provider.undead.ZombiePersistenceProvider,\
+      javax.persistence.spi.PersistenceProvider=jpa.provider.undead.ZombiePersistenceProvider'
