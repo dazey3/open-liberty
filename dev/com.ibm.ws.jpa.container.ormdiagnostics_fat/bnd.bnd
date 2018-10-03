@@ -11,6 +11,8 @@
 -include= ~../cnf/resources/bnd/bundle.props
 bVersion=1.0
 
+javac.target: 1.8
+javac.source: 1.8
 
 src: \
     fat/src, \
@@ -18,6 +20,7 @@ src: \
     test-applications/example/src,\
     test-applications/looseconfig/src,\
     test-applications/helpers/DatabaseManagement/src,\
+    test-applications/jpabootstrap/src,\
     test-framework/src
 
 fat.project: true
@@ -27,8 +30,10 @@ tested.features: jdbc-4.0, beanvalidation-1.1, jpa-2.0, el-3.0
 #      or binaries from an archive repository like Maven (e.g. commons-logging:commons-logging)
 -buildpath: \
     com.ibm.websphere.javaee.annotation.1.2;version=latest,\
+    com.ibm.websphere.javaee.cdi.2.0;version=latest,\
     com.ibm.websphere.javaee.ejb.3.2;version=latest,\
     com.ibm.websphere.javaee.jms.2.0;version=latest,\
     com.ibm.websphere.javaee.servlet.4.0;version=latest,\
     com.ibm.websphere.javaee.persistence.2.2;version=latest,\
-    com.ibm.websphere.javaee.transaction.1.2;version=latest
+    com.ibm.websphere.javaee.transaction.1.2;version=latest,\
+    com.ibm.websphere.javaee.validation.2.0;version=latest

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2017 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,22 +9,16 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
-addRequiredLibraries.dependsOn addDerby
+package com.ibm.ws.jpa;
 
-buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-  }
-  dependencies {
-    classpath "gradle.plugin.net.ossindex:ossindex-gradle-plugin:0.3.8-beta"
-  }
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+@RunWith(Suite.class)
+@SuiteClasses({
+                JPABootstrapTest.class
+})
+public class FATSuite {
+
 }
-
-apply plugin: "net.ossindex.audit"
-
-audit {
-    failOnError = false
-}
-
