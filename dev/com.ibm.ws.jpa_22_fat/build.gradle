@@ -35,7 +35,9 @@ task addECL27(type: Copy) {
 }
 
 addRequiredLibraries {
-  dependsOn addDerby
+  dependsOn copyJdbcDrivers
+  dependsOn copyDatabaseRotationDrivers
+  dependsOn copyFattestDatabases
   dependsOn addJakartaTransformer
   dependsOn addJPAFATTools
   dependsOn addECL27

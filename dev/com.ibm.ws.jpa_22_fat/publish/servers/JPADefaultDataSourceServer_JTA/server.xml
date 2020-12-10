@@ -10,39 +10,59 @@
  -->
 <server description="JPA Default DataSource Server">
 
-	<featureManager>
-		<feature>servlet-4.0</feature>
-		<feature>jpa-2.2</feature>
-	    <feature>componenttest-1.0</feature>
+    <featureManager>
+        <feature>servlet-4.0</feature>
+        <feature>jpa-2.2</feature>
+        <!-- <feature>servlet-3.1</feature>
+        <feature>jpa-2.1</feature> -->
+        <feature>componenttest-1.0</feature>
     </featureManager>
-    
+
     <include location="../fatTestPorts.xml"/>
-    
-    <jpa defaultJtaDataSourceJndiName="jdbc/JTA_DS1" />
-    
-    <dataSource id="jdbc/JTA_DS1" jndiName="jdbc/JTA_DS1" >
-    	    <jdbcDriver libraryRef="DerbyLib"/>
-    	    <properties.derby.embedded databaseName="memory:ds1" createDatabase="create" user="dbuser1" password="{xor}Oz0vKDtu" />
+
+    <jpa defaultJtaDataSourceJndiName="jdbc/JPA_JTA_DS1" />
+
+    <dataSource id="jdbc/JPA_JTA_DS1" jndiName="jdbc/JPA_JTA_DS1" fat.modify="true">
+            <jdbcDriver libraryRef="AnonymousJDBCLib"/>
+            <properties.derby.embedded databaseName="memory:ds1" createDatabase="create" />
     </dataSource>
-    
-    <dataSource id="jdbc/NJTA_DS1" jndiName="jdbc/NJTA_DS1" transactional="false" >
-    	    <jdbcDriver libraryRef="DerbyLib"/>
-    	    <properties.derby.embedded databaseName="memory:ds1" createDatabase="create" user="dbuser1" password="{xor}Oz0vKDtu" />
+
+    <dataSource id="jdbc/JPA_NJTA_DS1" jndiName="jdbc/JPA_NJTA_DS1" fat.modify="true" transactional="false">
+            <jdbcDriver libraryRef="AnonymousJDBCLib"/>
+            <properties.derby.embedded databaseName="memory:ds1" createDatabase="create" />
     </dataSource>
-    
-    <dataSource id="jdbc/JTA_DS2" jndiName="jdbc/JTA_DS2" >
-    	    <jdbcDriver libraryRef="DerbyLib"/>
-    	    <properties.derby.embedded databaseName="memory:ds2" createDatabase="create" user="dbuser1" password="{xor}Oz0vKDtu" />
+
+    <dataSource id="jdbc/JPA_JTA_DS2" jndiName="jdbc/JPA_JTA_DS2" fat.modify="true">
+            <jdbcDriver libraryRef="AnonymousJDBCLib"/>
+            <properties.derby.embedded databaseName="memory:ds2" createDatabase="create" />
     </dataSource>
-    
-    <dataSource id="jdbc/NJTA_DS2" jndiName="jdbc/NJTA_DS2" transactional="false" >
-    	    <jdbcDriver libraryRef="DerbyLib"/>
-    	    <properties.derby.embedded databaseName="memory:ds2" createDatabase="create" user="dbuser1" password="{xor}Oz0vKDtu" />
+
+    <dataSource id="jdbc/JPA_NJTA_DS2" jndiName="jdbc/JPA_NJTA_DS2" fat.modify="true" transactional="false">
+            <jdbcDriver libraryRef="AnonymousJDBCLib"/>
+            <properties.derby.embedded databaseName="memory:ds2" createDatabase="create" />
     </dataSource>
-    
-    <library id="DerbyLib" fat.modify="true">
-    	<fileset dir="${shared.resource.dir}/derby" includes="derby.jar"/>
+
+    <library id="AnonymousJDBCLib" fat.modify="true">
+        <fileset dir="${shared.resource.dir}/jdbc" includes="${env.DB_DRIVER}"/>
     </library>
-    
-    <javaPermission codebase="${shared.resource.dir}/derby/derby.jar" className="java.security.AllPermission"/>
+
+    <!-- JDBC driver -->
+    <javaPermission codebase="${shared.resource.dir}/jdbc/${env.DB_DRIVER}" className="java.security.AllPermission"/>
+
+    <!-- Permission needed for SQLServer driver -->
+    <javaPermission className="java.net.SocketPermission" name="*" actions="connect,resolve"/>
+
+    <!-- Permission needed for Oracle driver -->
+    <javaPermission className="java.lang.RuntimePermission" name="accessDeclaredMembers" />
+
+    <!-- File read write permissions -->
+    <javaPermission className="java.util.PropertyPermission" name="user.dir" actions="read"/>
+    <javaPermission className="java.io.FilePermission" name="files/timertestoutput.txt" actions="read,write"/>
+    <javaPermission className="java.io.FilePermission" name="files" actions="write"/>
+
+    <!--<logging  traceSpecification="JPA=all=enabled:EJBContainer=all=enabled"
+              traceFileName="trace.log"
+              maxFileSize="2000"
+              maxFiles="10"
+              traceFormat="BASIC" />-->
 </server>

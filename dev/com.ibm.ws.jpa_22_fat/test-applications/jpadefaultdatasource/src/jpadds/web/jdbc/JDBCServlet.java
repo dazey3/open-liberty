@@ -30,16 +30,16 @@ public class JDBCServlet extends HttpServlet {
     @Resource
     private UserTransaction tx;
 
-    @Resource(lookup = "jdbc/JTA_DS1")
+    @Resource(lookup = "jdbc/JPA_JTA_DS1")
     private DataSource ds1Jta;
 
-    @Resource(lookup = "jdbc/NJTA_DS1")
+    @Resource(lookup = "jdbc/JPA_NJTA_DS1")
     private DataSource ds1Rl;
 
-    @Resource(lookup = "jdbc/JTA_DS2")
+    @Resource(lookup = "jdbc/JPA_JTA_DS2")
     private DataSource ds2Jta;
 
-    @Resource(lookup = "jdbc/NJTA_DS2")
+    @Resource(lookup = "jdbc/JPA_NJTA_DS2")
     private DataSource ds2Rl;
 
     @Override

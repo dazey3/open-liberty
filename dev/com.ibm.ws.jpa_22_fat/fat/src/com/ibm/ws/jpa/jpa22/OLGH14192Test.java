@@ -16,6 +16,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
 import com.ibm.websphere.simplicity.ShrinkHelper;
 import com.ibm.ws.jpa.FATSuite;
@@ -24,6 +25,8 @@ import componenttest.annotation.Server;
 import componenttest.annotation.SkipForRepeat;
 import componenttest.annotation.TestServlet;
 import componenttest.custom.junit.runner.FATRunner;
+import componenttest.topology.database.container.DatabaseContainerType;
+import componenttest.topology.database.container.DatabaseContainerUtil;
 import componenttest.topology.impl.LibertyServer;
 import componenttest.topology.utils.FATServletClient;
 import componenttest.topology.utils.PrivHelper;
@@ -39,6 +42,8 @@ public class OLGH14192Test extends FATServletClient {
     @TestServlet(servlet = OLGH14192TestServlet.class, path = APP_NAME + "/" + SERVLET)
     public static LibertyServer server1;
 
+    public static final JdbcDatabaseContainer<?> testContainer = FATSuite.testContainer;
+
     @BeforeClass
     public static void setUp() throws Exception {
         PrivHelper.generateCustomPolicy(server1, FATSuite.JAXB_PERMS);
@@ -47,6 +52,12 @@ public class OLGH14192Test extends FATServletClient {
         app.addPackage("olgh14192");
         ShrinkHelper.exportAppToServer(server1, app);
         server1.addInstalledAppForValidation(APP_NAME);
+
+        //Get driver name
+        server1.addEnvVar("DB_DRIVER", DatabaseContainerType.valueOf(testContainer).getDriverName());
+
+        //Setup server DataSource properties
+        DatabaseContainerUtil.setupDataSourceProperties(server1, testContainer);
 
         server1.startServer();
     }

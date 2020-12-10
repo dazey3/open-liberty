@@ -17,11 +17,14 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
 import com.ibm.websphere.simplicity.ShrinkHelper;
 
 import componenttest.annotation.Server;
 import componenttest.custom.junit.runner.FATRunner;
+import componenttest.topology.database.container.DatabaseContainerType;
+import componenttest.topology.database.container.DatabaseContainerUtil;
 import componenttest.topology.impl.LibertyServer;
 import componenttest.topology.utils.FATServletClient;
 import componenttest.topology.utils.PrivHelper;
@@ -35,6 +38,8 @@ public class EJBPassivationTest extends FATServletClient {
     @Server("EJBPassivationServer")
     public static LibertyServer server1;
 
+    public static final JdbcDatabaseContainer<?> testContainer = FATSuite.testContainer;
+
     @BeforeClass
     public static void setUp() throws Exception {
         final String resPath = "test-applications/" + APP_NAME + "/resources/";
@@ -46,6 +51,12 @@ public class EJBPassivationTest extends FATServletClient {
         app.addPackage("ejbpassivation.web");
         ShrinkHelper.addDirectory(app, resPath);
         ShrinkHelper.exportDropinAppToServer(server1, app);
+
+        //Get driver name
+        server1.addEnvVar("DB_DRIVER", DatabaseContainerType.valueOf(testContainer).getDriverName());
+
+        //Setup server DataSource properties
+        DatabaseContainerUtil.setupDataSourceProperties(server1, testContainer);
 
         server1.startServer();
     }

@@ -19,6 +19,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
 import com.ibm.websphere.simplicity.ShrinkHelper;
 
@@ -26,6 +27,8 @@ import componenttest.annotation.Server;
 import componenttest.annotation.TestServlet;
 import componenttest.annotation.TestServlets;
 import componenttest.custom.junit.runner.FATRunner;
+import componenttest.topology.database.container.DatabaseContainerType;
+import componenttest.topology.database.container.DatabaseContainerUtil;
 import componenttest.topology.impl.LibertyServer;
 import componenttest.topology.utils.FATServletClient;
 import componenttest.topology.utils.PrivHelper;
@@ -49,6 +52,8 @@ public class JPABootstrapTest extends FATServletClient {
     })
     public static LibertyServer server1;
 
+    public static final JdbcDatabaseContainer<?> testContainer = FATSuite.testContainer;
+
     @BeforeClass
     public static void setUp() throws Exception {
         PrivHelper.generateCustomPolicy(server1, PrivHelper.JAXB_PERMISSION);
@@ -56,6 +61,13 @@ public class JPABootstrapTest extends FATServletClient {
         createApplication("2.0");
         createApplication("2.1");
         createApplication("2.2");
+
+        //Get driver name
+        server1.addEnvVar("DB_DRIVER", DatabaseContainerType.valueOf(testContainer).getDriverName());
+
+        //Setup server DataSource properties
+        DatabaseContainerUtil.setupDataSourceProperties(server1, testContainer);
+
         server1.startServer();
     }
 

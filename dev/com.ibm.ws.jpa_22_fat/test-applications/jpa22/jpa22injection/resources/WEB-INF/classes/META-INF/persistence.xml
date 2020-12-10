@@ -20,7 +20,7 @@
     </persistence-unit>
     
     <persistence-unit name="JPAPU-1RL" transaction-type="RESOURCE_LOCAL">
-        <non-jta-data-source>jdbc/NonTransactionalDataSource</non-jta-data-source>
+        <non-jta-data-source>jdbc/JPA_NJTA_DS</non-jta-data-source>
         <class>jpa22injection.entity.InjectEntityA</class>
         <exclude-unlisted-classes/>
         <properties>
@@ -29,7 +29,7 @@
         </properties>
     </persistence-unit>
     <persistence-unit name="JPAPU-2RL" transaction-type="RESOURCE_LOCAL">
-        <non-jta-data-source>jdbc/NonTransactionalDataSource</non-jta-data-source>
+        <non-jta-data-source>jdbc/JPA_NJTA_DS</non-jta-data-source>
         <class>jpa22injection.entity.InjectEntityB</class>
         <exclude-unlisted-classes/>
         <properties>

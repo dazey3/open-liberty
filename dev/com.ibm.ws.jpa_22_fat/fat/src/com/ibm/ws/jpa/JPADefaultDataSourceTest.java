@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 
 import com.ibm.websphere.simplicity.ShrinkHelper;
 import com.ibm.websphere.simplicity.config.ConfigElementList;
@@ -29,6 +30,8 @@ import componenttest.annotation.Server;
 import componenttest.custom.junit.runner.FATRunner;
 import componenttest.custom.junit.runner.Mode;
 import componenttest.custom.junit.runner.Mode.TestMode;
+import componenttest.topology.database.container.DatabaseContainerType;
+import componenttest.topology.database.container.DatabaseContainerUtil;
 import componenttest.topology.impl.LibertyServer;
 import componenttest.topology.utils.HttpUtils;
 import componenttest.topology.utils.PrivHelper;
@@ -49,8 +52,21 @@ public class JPADefaultDataSourceTest {
     @Server("JPADefaultDataSourceServer_NJTA")
     public static LibertyServer server_NJTA;
 
+    public static final JdbcDatabaseContainer<?> testContainer = FATSuite.testContainer;
+
     @BeforeClass
     public static void setUp() throws Exception {
+
+        //Get driver name
+        server_JTA_NJTA.addEnvVar("DB_DRIVER", DatabaseContainerType.valueOf(testContainer).getDriverName());
+        server_JTA.addEnvVar("DB_DRIVER", DatabaseContainerType.valueOf(testContainer).getDriverName());
+        server_NJTA.addEnvVar("DB_DRIVER", DatabaseContainerType.valueOf(testContainer).getDriverName());
+
+        //Setup server DataSource properties
+        DatabaseContainerUtil.setupDataSourceProperties(server_JTA_NJTA, testContainer);
+        DatabaseContainerUtil.setupDataSourceProperties(server_JTA, testContainer);
+        DatabaseContainerUtil.setupDataSourceProperties(server_NJTA, testContainer);
+
         PrivHelper.generateCustomPolicy(server_JTA_NJTA, JAXB_PERMS);
         PrivHelper.generateCustomPolicy(server_JTA, JAXB_PERMS);
         PrivHelper.generateCustomPolicy(server_NJTA, JAXB_PERMS);
@@ -115,7 +131,7 @@ public class JPADefaultDataSourceTest {
 
             ServerConfiguration sc = server_JTA.getServerConfiguration();
             JPA jpaElement = getJPAConfigElement(sc);
-            jpaElement.setDefaultJtaDataSourceJndiName("jdbc/JTA_DS2");
+            jpaElement.setDefaultJtaDataSourceJndiName("jdbc/JPA_JTA_DS2");
 
             server_JTA.updateServerConfiguration(sc);
             server_JTA.saveServerConfiguration();
@@ -169,7 +185,7 @@ public class JPADefaultDataSourceTest {
 
             ServerConfiguration sc = server_NJTA.getServerConfiguration();
             JPA jpaElement = getJPAConfigElement(sc);
-            jpaElement.setDefaultNonJtaDataSourceJndiName("jdbc/NJTA_DS2");
+            jpaElement.setDefaultNonJtaDataSourceJndiName("jdbc/JPA_NJTA_DS2");
 
             server_NJTA.updateServerConfiguration(sc);
             server_NJTA.saveServerConfiguration();
@@ -227,8 +243,8 @@ public class JPADefaultDataSourceTest {
 
             ServerConfiguration sc = server_JTA_NJTA.getServerConfiguration();
             JPA jpaElement = getJPAConfigElement(sc);
-            jpaElement.setDefaultJtaDataSourceJndiName("jdbc/JTA_DS2");
-            jpaElement.setDefaultNonJtaDataSourceJndiName("jdbc/NJTA_DS2");
+            jpaElement.setDefaultJtaDataSourceJndiName("jdbc/JPA_JTA_DS2");
+            jpaElement.setDefaultNonJtaDataSourceJndiName("jdbc/JPA_NJTA_DS2");
 
             server_JTA_NJTA.updateServerConfiguration(sc);
             server_JTA_NJTA.saveServerConfiguration();
